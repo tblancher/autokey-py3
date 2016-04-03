@@ -45,6 +45,13 @@ class MenuBase:
             folders.sort(key=lambda obj: str(obj))
             items.sort(key=lambda obj: str(obj))      
         
+        if ConfigManager.SETTINGS[TRIGGER_BY_INITIAL]:
+            _logger.debug("Triggering menu item by first initial")
+            self.triggerInitial = 1
+        else:
+            _logger.debug("Triggering menu item by position in list")
+            self.triggerInitial = 0
+
         if len(folders) == 1 and len(items) == 0 and onDesktop:
             # Only one folder - create menu with just its folders and items
             self.addTitle(folders[0].title)
@@ -86,13 +93,16 @@ class MenuBase:
                 self._addItem(item.description, item)
 
     def _getMnemonic(self, desc):
-        #if 1 < 10 and '&' not in desc and self._onDesktop:
-        #    ret = "&%d - %s" % (self.__i, desc)
-        #    self.__i += 1
-        #    return ret
-        #else:
+        if 1 < 10 and '_' not in desc and self._onDesktop:
+            if self.triggerInitial:
+                ret = "%s" % (desc)
+            else:
+                ret = "_%d - %s" % (self.__i, desc)
+            self.__i += 1
+            return ret
+        else:
         # FIXME - menu does not get keyboard focus, so mnemonic is useless
-        return desc
+            return desc
         
 class PopupMenu(KMenu, MenuBase):
     

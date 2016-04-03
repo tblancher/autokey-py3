@@ -42,6 +42,7 @@ class GeneralSettings(QWidget, generalsettings.Ui_Form):
         self.allowKbNavCheckbox.setVisible(False)
         self.sortByUsageCheckbox.setChecked(ConfigManager.SETTINGS[SORT_BY_USAGE_COUNT])
         self.enableUndoCheckbox.setChecked(ConfigManager.SETTINGS[UNDO_USING_BACKSPACE])
+        self.triggerItemByInitial.setChecked(ConfigManager.SETTINGS[TRIGGER_BY_INITIAL]
         
     def save(self):
         ConfigManager.SETTINGS[PROMPT_TO_SAVE] = self.promptToSaveCheckbox.isChecked()
@@ -49,6 +50,7 @@ class GeneralSettings(QWidget, generalsettings.Ui_Form):
         #ConfigManager.SETTINGS[MENU_TAKES_FOCUS] = self.allowKbNavCheckbox.isChecked()
         ConfigManager.SETTINGS[SORT_BY_USAGE_COUNT] = self.sortByUsageCheckbox.isChecked()
         ConfigManager.SETTINGS[UNDO_USING_BACKSPACE] = self.enableUndoCheckbox.isChecked()
+        ConfigManager.SETTINGS[TRIGGER_BY_INITIAL] = self.triggerItemByInitial.isChecked()
 
 
 class SpecialHotkeySettings(QWidget, specialhotkeysettings.Ui_Form):
